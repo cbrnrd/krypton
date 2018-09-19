@@ -1,0 +1,65 @@
+#!/usr/bin/env ruby
+lib = File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'core'
+require 'colorize'
+
+Signal.trap("INT"){}
+
+ARGV << '-h' if ARGV.empty?
+
+options = {}
+options[:outfile] = ''
+options[:raw] = false
+OptionParser.new do |opts|
+  opts.banner = "A command-line tool to encrypt and decrypt data in multiple formats.\n\nUsage: #{File.basename($PROGRAM_NAME)} [options] [task] \"message\" \"key\"\nKrypton version: #{Paint[VERSION, '#2ecc71']}"
+  opts.separator Paint["\nGlobal Options: ", '#95a5a6']
+
+  opts.on('-o OUTFILE', '--outfile OUTFILE', String, 'A file to save the output in') do |v|
+    options[:outfile] = v
+  end
+
+  opts.on('-r', '--raw', 'Set the input and output type to the raw bytes, if available (Default: false)') do
+    options[:raw] = true
+  end
+
+  opts.on('--verbose', 'Run verbosely') do
+    $verbose = true
+  end
+
+  opts.on('-v', '--version', 'Show the krypton version and exit') do
+    puts "Krypton version: #{Paint[VERSION, '#2ecc71']}"
+    exit 0
+  end
+
+  opts.on('-h', '--help', 'Show this help message') do
+    puts opts
+    puts TASKS_HELP
+    exit
+  end
+
+  opts.separator Paint["\nTasks: ", '#95a5a6']
+
+end.parse!(ARGV)
+
+while (opt = ARGV.shift) do
+  case opt
+  when 'encrypt'
+    #puts Krypton::AESCrypt.encrypt(ARGV[ARGV.length - 2], ARGV[ARGV.length - 1], options[:outfile]) if options[:raw]
+    result = Base64.encode64(Krypton::AESCrypt.encrypt(ARGV[ARGV.length - 2], ARGV[ARGV.length - 1], options[:outfile]))
+    puts "#{ARGV[ARGV.length - 2] + ' => '}#{Paint[result.strip, '#2ecc71']}"
+    exit 0
+  when 'decrypt'
+    #puts Krypton::AESCrypt.decrypt(ARGV[ARGV.length - 2], ARGV[ARGV.length - 1], options[:outfile]) if options[:raw]
+    result = Krypton::AESCrypt.decrypt(Base64.decode64(ARGV[ARGV.length - 2]), ARGV[ARGV.length - 1], options[:outfile])
+    puts "#{ARGV[ARGV.length - 2] + ' => '}#{Paint[result.strip, '#2ecc71']}"
+    exit 0
+  when 'hash'
+    puts "This feature is not implemented yet but is coming soon."
+    exit 0
+  else
+    puts "#{opt} is not a valid action!"
+    exit 1
+  end
+end
