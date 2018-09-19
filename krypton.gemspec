@@ -3,7 +3,7 @@ require "core"
 
 Gem::Specification.new do |spec|
   spec.name          = "krypton"
-  spec.version       = '0.1.0'
+  spec.version       = '0.1.1'
   spec.authors       = ["cbrnrd"]
   spec.email         = ["0xCB@protonmail.com"]
   spec.summary       = %q{A command-line tool for easy encryption and decryption of data.}
