@@ -56,7 +56,8 @@ while (opt = ARGV.shift) do
     puts "#{ARGV[ARGV.length - 2] + ' => '}#{Paint[result.strip, '#2ecc71']}"
     exit 0
   when 'hash'
-    puts "This feature is not implemented yet but is coming soon."
+    result = Krypton::SHA.hash(ARGV[ARGV.length - 1], options[:raw])
+    puts "#{ARGV[ARGV.length - 1] + ' => '}#{Paint[result.strip, '#2ecc71']}"
     exit 0
   else
     puts "#{opt} is not a valid action!"
