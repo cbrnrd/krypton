@@ -4,7 +4,6 @@ AUTHORS = {
 }
 
 module Krypton
-  module Constants
-
-  end
+module Constants
+end
 end

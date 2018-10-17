@@ -9,7 +9,6 @@ class AESCrypt
     a = Base64.encode64(self.encrypt_data(message.to_s.strip, self.key_digest(password), nil, "AES-256-CBC"))
     File.write(outfile, a) unless outfile == '' || outfile.nil?
     a
-
   end
 
   def self.decrypt(message, password, outfile='')

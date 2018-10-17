@@ -16,6 +16,10 @@ OptionParser.new do |opts|
   opts.banner = "A command-line tool to encrypt and decrypt data in multiple formats.\n\nUsage: #{File.basename($PROGRAM_NAME)} [options] [task] \"message\" \"key\"\nKrypton version: #{Paint[VERSION, '#2ecc71']}"
   opts.separator Paint["\nGlobal Options: ", '#95a5a6']
 
+  opts.on('-s', '--std', 'Print output suitable for piping.') do 
+    options[:std] = true
+  end
+
   opts.on('-o OUTFILE', '--outfile OUTFILE', String, 'A file to save the output in') do |v|
     options[:outfile] = v
   end
@@ -48,16 +52,28 @@ while (opt = ARGV.shift) do
   when 'encrypt'
     #puts Krypton::AESCrypt.encrypt(ARGV[ARGV.length - 2], ARGV[ARGV.length - 1], options[:outfile]) if options[:raw]
     result = Base64.encode64(Krypton::AESCrypt.encrypt(ARGV[ARGV.length - 2], ARGV[ARGV.length - 1], options[:outfile]))
-    puts "#{ARGV[ARGV.length - 2] + ' => '}#{Paint[result.strip, '#2ecc71']}"
+    if options[:std]
+      puts result.strip
+    else
+      puts "#{ARGV[ARGV.length - 2] + ' => '}#{Paint[result.strip, '#2ecc71']}"
+    end
     exit 0
   when 'decrypt'
     #puts Krypton::AESCrypt.decrypt(ARGV[ARGV.length - 2], ARGV[ARGV.length - 1], options[:outfile]) if options[:raw]
     result = Krypton::AESCrypt.decrypt(Base64.decode64(ARGV[ARGV.length - 2]), ARGV[ARGV.length - 1], options[:outfile])
-    puts "#{ARGV[ARGV.length - 2] + ' => '}#{Paint[result.strip, '#2ecc71']}"
+    if options[:std]
+      puts result.strip
+    else
+      puts "#{ARGV[ARGV.length - 2] + ' => '}#{Paint[result.strip, '#2ecc71']}"
+    end
     exit 0
   when 'hash'
     result = Krypton::SHA.hash(ARGV[ARGV.length - 1], options[:raw])
-    puts "#{ARGV[ARGV.length - 1] + ' => '}#{Paint[result.strip, '#2ecc71']}"
+    if options[:std]
+      puts result.strip
+    else
+      puts "#{ARGV[ARGV.length - 1] + ' => '}#{Paint[result.strip, '#2ecc71']}"
+    end
     exit 0
   else
     puts "#{opt} is not a valid action!"

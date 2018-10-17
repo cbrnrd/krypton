@@ -3,9 +3,11 @@
 /_yardoc/
 /coverage/
 /doc/
-/pkg/
+pkg
 /spec/reports/
 /tmp/
+*.gem
+.vscode
 
 # rspec failure tracking
 .rspec_status
