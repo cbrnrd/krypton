@@ -1,6 +1,4 @@
-# Krypton
-
-Simple encryption and decryption from the command line.
+<p align="center"><img src="https://raw.githubusercontent.com/cbrnrd/krypton/master/img/krypton-logo-readme.png"></p>
 
 
 ## Installation
