@@ -49,8 +49,9 @@ end.parse!(ARGV)
 
 while (opt = ARGV.shift) do
   case opt
+
+  # AESING
   when 'encrypt'
-    #puts Krypton::AESCrypt.encrypt(ARGV[ARGV.length - 2], ARGV[ARGV.length - 1], options[:outfile]) if options[:raw]
     result = Base64.encode64(Krypton::AESCrypt.encrypt(ARGV[ARGV.length - 2], ARGV[ARGV.length - 1], options[:outfile]))
     if options[:std]
       puts result.strip
@@ -59,7 +60,6 @@ while (opt = ARGV.shift) do
     end
     exit 0
   when 'decrypt'
-    #puts Krypton::AESCrypt.decrypt(ARGV[ARGV.length - 2], ARGV[ARGV.length - 1], options[:outfile]) if options[:raw]
     result = Krypton::AESCrypt.decrypt(Base64.decode64(ARGV[ARGV.length - 2]), ARGV[ARGV.length - 1], options[:outfile])
     if options[:std]
       puts result.strip
@@ -67,12 +67,18 @@ while (opt = ARGV.shift) do
       puts "#{ARGV[ARGV.length - 2] + ' => '}#{Paint[result.strip, '#2ecc71']}"
     end
     exit 0
+  
+  # HASHING
   when 'hash'
-    result = Krypton::SHA.hash(ARGV[ARGV.length - 1], options[:raw])
+
+    data = ARGV[ARGV.length - 1] || gets
+
+    result = Krypton::SHA.hash(data, options[:raw])
+    
     if options[:std]
       puts result.strip
     else
-      puts "#{ARGV[ARGV.length - 1] + ' => '}#{Paint[result.strip, '#2ecc71']}"
+      puts "#{data + ' => '}#{Paint[result.strip, '#2ecc71']}"
     end
     exit 0
   else
