@@ -1,4 +1,4 @@
-VERSION = "0.1.3"
+VERSION = "0.1.4"
 AUTHORS = {
   'Carter Brainerd' => '0xCB[at]protonmail[dot]com'
 }
