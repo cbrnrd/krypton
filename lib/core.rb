@@ -2,6 +2,7 @@
 require 'base64'
 require 'optparse'
 require 'paint'
+require 'securerandom'
 
 # lib files
 require_relative './core/constants.rb'

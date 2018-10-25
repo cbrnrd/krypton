@@ -81,6 +81,8 @@ while (opt = ARGV.shift) do
       puts "#{data + ' => '}#{Paint[result.strip, '#2ecc71']}"
     end
     exit 0
+  when 'uuid'
+    puts Paint[SecureRandom.uuid, '#2ecc71']
   else
     puts "#{opt} is not a valid action!"
     exit 1
