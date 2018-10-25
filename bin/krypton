@@ -83,6 +83,19 @@ while (opt = ARGV.shift) do
     exit 0
   when 'uuid'
     puts Paint[SecureRandom.uuid, '#2ecc71']
+  when 'totp'
+    if ARGV.length == 2
+      puts "You need a secret to generate a totp."
+      exit 1
+    else
+      secret = ARGV[ARGV.length - 1] || gets
+      if options[:std]
+        puts ROTP::TOTP.new(secret).now
+      else
+        puts "#{secret + ' => ' + Paint[ROTP::TOTP.new(secret).now,'#2ecc71']}"
+      end
+      exit 0
+    end
   else
     puts "#{opt} is not a valid action!"
     exit 1
