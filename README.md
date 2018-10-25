@@ -1,4 +1,4 @@
-<p align="center"><img src="https://raw.githubusercontent.com/cbrnrd/krypton/master/img/krypton-readme-header.png"></p>
+<p align="center"><img src="https://github.com/cbrnrd/krypton/raw/88b44a70de4829c3dd77dc8fbeb0395f89668b07/img/krypton-readme-header.png"></p>
 
 
 ## Installation
