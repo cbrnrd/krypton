@@ -13,5 +13,5 @@ TASKS_HELP =
   #{Paint['Examples', '#95a5a6']}
     #{Paint['$ krypton encrypt "mymessage" "mykey"', '#2ecc71']} #{Paint['=> ckhJWXcyTE1leENLOWpBQzJWbElMdz09Cg==', '#95a5a6']}
     #{Paint['$ krypton hash "mymessage"', '#2ecc71']} => #{Paint['S3ONp9WM7/rCMeuUnvWDzp5dxbuSVsOV6bI5AJvRqCc=', '#95a5a6']}
-    #{Paint['$ krypton totp "mygreatsecret"']} => #{Paint['778501', '#95a5a6']}
+    #{Paint['$ krypton totp "mygreatsecret"', '#2ecc71']} => #{Paint['778501', '#95a5a6']}
 }
