@@ -9,6 +9,8 @@ TASKS_HELP =
     hash                                Hash a given message with SHA256.
     uuid                                Generate a random UUID.
     totp                                Generate a Time-based One Time Password.
+    b64e                                Encode data in base64
+    b64d                                Decode base64 data
 
   #{Paint['Examples', '#95a5a6']}
     #{Paint['$ krypton encrypt "mymessage" "mykey"', '#2ecc71']} #{Paint['=> ckhJWXcyTE1leENLOWpBQzJWbElMdz09Cg==', '#95a5a6']}

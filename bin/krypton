@@ -28,6 +28,10 @@ OptionParser.new do |opts|
     options[:raw] = true
   end
 
+  opts.on('-u', '--urlsafe', 'Make output data URL safe (base64)') do
+    options[:urlsafe] = true
+  end
+
   opts.on('--verbose', 'Run verbosely') do
     $verbose = true
   end
@@ -47,6 +51,7 @@ OptionParser.new do |opts|
 
 end.parse!(ARGV)
 
+# Tasks loop
 while (opt = ARGV.shift) do
   case opt
 
@@ -68,6 +73,7 @@ while (opt = ARGV.shift) do
     end
     exit 0
   
+  
   # HASHING
   when 'hash'
 
@@ -81,8 +87,10 @@ while (opt = ARGV.shift) do
       puts "#{data + ' => '}#{Paint[result.strip, '#2ecc71']}"
     end
     exit 0
+  
   when 'uuid'
     puts Paint[SecureRandom.uuid, '#2ecc71']
+  
   when 'totp'
     if ARGV.length == 2
       puts "You need a secret to generate a totp."
@@ -96,6 +104,25 @@ while (opt = ARGV.shift) do
       end
       exit 0
     end
+  
+  when 'b64e'
+    data = ARGV[ARGV.length - 1] || gets
+    if options[:std]
+      puts Krypton::B64.encode(data, options[:urlsafe])
+    else
+      puts "#{data + ' => ' + Paint[Krypton::B64.encode(data, options[:urlsafe]),'#2ecc71']}"
+    end
+    exit 0
+
+  when 'b64d'
+    data = ARGV[ARGV.length - 1] || gets
+    if options[:std]
+      puts Krypton::B64.decode(data, options[:urlsafe])
+    else
+      puts "#{data + ' => ' + Paint[Krypton::B64.decode(data, options[:urlsafe]),'#2ecc71']}"
+    end
+    exit 0
+    
   else
     puts "#{opt} is not a valid action!"
     exit 1
