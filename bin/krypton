@@ -28,7 +28,7 @@ OptionParser.new do |opts|
     options[:raw] = true
   end
 
-  opts.on('-u', '--urlsafe', 'Make output data URL safe (base64)') do
+  opts.on('-u', '--urlsafe', 'Make output data URL safe (base64) if applicable') do
     options[:urlsafe] = true
   end
 
@@ -89,8 +89,12 @@ while (opt = ARGV.shift) do
     exit 0
   
   when 'uuid'
-    puts Paint[SecureRandom.uuid, '#2ecc71']
-  
+    if options[:std]
+      puts SecureRandom.uuid
+    else
+      puts Paint[SecureRandom.uuid, '#2ecc71']
+    end
+
   when 'totp'
     if ARGV.length == 2
       puts "You need a secret to generate a totp."
@@ -122,7 +126,14 @@ while (opt = ARGV.shift) do
       puts "#{data + ' => ' + Paint[Krypton::B64.decode(data, options[:urlsafe]),'#2ecc71']}"
     end
     exit 0
-    
+  when 'sum'
+    filename = ARGV[ARGV.length - 1] || gets
+    if options[:std]
+      puts Krypton::SHA.checksum(filename, options[:raw])
+    else
+      puts "#{filename} => #{Paint[Krypton::SHA.checksum(filename, options[:raw]), '#2ecc71']}"
+    end
+    exit 0
   else
     puts "#{opt} is not a valid action!"
     exit 1
