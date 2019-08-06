@@ -13,10 +13,10 @@ options = {}
 options[:outfile] = ''
 options[:raw] = false
 OptionParser.new do |opts|
-  opts.banner = "A command-line tool to encrypt and decrypt data in multiple formats.\n\nUsage: #{File.basename($PROGRAM_NAME)} [options] [task] \"message\" \"key\"\nKrypton version: #{Paint[VERSION, '#2ecc71']}"
+  opts.banner = "A command-line tool to encrypt and decrypt data in multiple formats.\n\nUsage: #{File.basename($PROGRAM_NAME)} [options] [task] \"data\" [\"key\"]\nKrypton version: #{Paint[VERSION, '#2ecc71']}"
   opts.separator Paint["\nGlobal Options: ", '#95a5a6']
 
-  opts.on('-s', '--std', 'Print output suitable for piping.') do 
+  opts.on('-s', '--std', 'Print output suitable for piping.') do
     options[:std] = true
   end
 
@@ -72,22 +72,21 @@ while (opt = ARGV.shift) do
       puts "#{ARGV[ARGV.length - 2] + ' => '}#{Paint[result.strip, '#2ecc71']}"
     end
     exit 0
-  
-  
+
   # HASHING
   when 'hash'
 
     data = ARGV[ARGV.length - 1] || gets
 
     result = Krypton::SHA.hash(data, options[:raw])
-    
+
     if options[:std]
       puts result.strip
     else
       puts "#{data + ' => '}#{Paint[result.strip, '#2ecc71']}"
     end
     exit 0
-  
+
   when 'uuid'
     if options[:std]
       puts SecureRandom.uuid
@@ -108,7 +107,7 @@ while (opt = ARGV.shift) do
       end
       exit 0
     end
-  
+
   when 'b64e'
     data = ARGV[ARGV.length - 1] || gets
     if options[:std]
@@ -134,6 +133,22 @@ while (opt = ARGV.shift) do
       puts "#{filename} => #{Paint[Krypton::SHA.checksum(filename, options[:raw]), '#2ecc71']}"
     end
     exit 0
+  when 'lookup'
+    hashes_key = ENV['HASHES_API_KEY']
+    hash = ARGV[ARGV.length - 1]
+    if hashes_key.nil?
+      puts "A valid hashes.org API key is required to use this feature."
+      puts "Please set the environment variable HASHES_API_KEY to your key."
+      exit 1
+    end
+
+    begin
+      Krypton::Lookup.lookup(hash, hashes_key)
+    rescue StandardError => e
+      puts "ERROR: #{e.message}"
+      exit 1
+    end
+
   else
     puts "#{opt} is not a valid action!"
     exit 1
