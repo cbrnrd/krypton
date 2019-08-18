@@ -42,7 +42,16 @@ All krypton functions use the same basic syntax: `krypton [cmd] {[message/secret
 
         $ krypton totp "myawesomesecret"
         myawesomesecret => 997820
+        
+* `lookup` - Look up the cracked hash from hashes.org
 
+        $ krypton lookup 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+        
+        Result found: 
+        Hash: 5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8
+        Plaintext: password
+        Algorithm: SHA256X1PLAIN
+        
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/cbrnrd/krypton. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
