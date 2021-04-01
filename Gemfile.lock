@@ -33,7 +33,7 @@ GEM
     http_parser.rb (0.6.0)
     paint (2.1.0)
     public_suffix (3.1.1)
-    rake (10.5.0)
+    rake (13.0.1)
     rotp (5.1.0)
       addressable (~> 2.5)
     rspec (3.8.0)
@@ -59,7 +59,7 @@ PLATFORMS
 DEPENDENCIES
   bundler (~> 1.16)
   krypton!
-  rake (~> 10.0)
+  rake (~> 13.0)
   rspec (~> 3.0)
 
 BUNDLED WITH
